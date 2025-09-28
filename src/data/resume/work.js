@@ -27,6 +27,7 @@ const work = [
       7. Mysql, Oracle, Redis, MongoDb, Kafka, Elasticsearch, ClickHouse
       8. Docker, Kubernetes
       9. Electron
+      10. Airtable, n8n, supabase
       `,
     highlights: [
       "1. Computer professional background, 13 years of Java development experience, bachelor's degree",
