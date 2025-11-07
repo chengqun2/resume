@@ -19,18 +19,19 @@ const work = [
     startDate: '2011-09-01',
     summary: `
       1. Java Back-end SpringCloud/SpringBoot
-      2. Python(django, flask)
+      2. Python(fastapi, django, flask)
       3. VueJs, Element-plus
       4. React, Tailwind Css
       5. NodeJs (express)
       6. Html, Css, Javascript, Typescript, Jquery, Layui
-      7. Mysql, Oracle, Redis, MongoDb, Kafka, Elasticsearch, ClickHouse
-      8. Docker, Kubernetes
+      7. Mysql, Oracle, Postgres, Redis, MongoDb, Kafka, Elasticsearch, ClickHouse
+      8. Docker, Kubernetes, railway
       9. Electron
-      10. Airtable, n8n, supabase
+      10. Airtable, n8n
+      11. AI prompt
       `,
     highlights: [
-      "1. Computer professional background, 13 years of Java development experience, bachelor's degree",
+      "1. Computer professional background, 14 years of Java development experience, bachelor's degree",
       '2. Experience with J2EE, Spring Framework, Spring Boot, Spring Cloud, REST API, Json and XML parsers',
       '3. Skilled at Html, CSS, Javascript, jquery, Typescript, Vue, React',
       '4. Skilled at Node.js(My nodejs repository: https://github.com/chengqun2/node-connect-linux.git)',
