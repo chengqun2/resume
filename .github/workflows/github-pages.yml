@@ -2,48 +2,45 @@
 name: Deploy static content to Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
+    branches: ["main"]     # Runs on pushes to main
+  workflow_dispatch:        # Allows manual run from the Actions tab
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+# Prevents queue locking — each deployment run has its own concurrency group
 concurrency:
-  group: "pages"
+  group: "pages-${{ github.run_id }}"
   cancel-in-progress: false
 
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-20.04
+
+    runs-on: ubuntu-latest    # use latest for better availability
     timeout-minutes: 10
+
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup Node
-        uses: actions/setup-node@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version-file: ".nvmrc"
           cache: "npm"
-      - name: Install
+
+      - name: Install dependencies
         run: npm ci
+
       - name: Build and Render
         shell: bash
         run: |
-          # NOTE: Rendering can be flaky and react-snap is no
-          # longer maintained, so retry until I convert to next.
           function retry {
             local n=1
             local max=5
@@ -53,7 +50,7 @@ jobs:
                 if [[ $n -lt $max ]]; then
                   ((n++))
                   echo "Command failed. Attempt $n/$max:"
-                  sleep $delay;
+                  sleep $delay
                 else
                   echo "The command has failed after $n attempts."
                   return 1
@@ -64,14 +61,16 @@ jobs:
           retry npm run predeploy
         env:
           NODE_ENV: production
-          # Remove this line if you would like to skip using google analytics
           REACT_APP_GA_TRACKING_ID: UA-68649021-1
+
       - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v2
+        uses: actions/configure-pages@v5
+
+      - name: Upload build output
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: "build"
+          path: build
+
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
