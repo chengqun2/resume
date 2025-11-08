@@ -4,12 +4,29 @@
     <meta charset="utf-8">
     <title>Redirecting...</title>
     <script type="text/javascript">
-      // Redirect all 404 requests to index.html (React SPA fallback)
-      var redirectTo = window.location.protocol + "//" + window.location.host + "/resume/index.html";
-      window.location.replace(redirectTo);
+      (function () {
+        // The repository name (your GitHub Pages subpath)
+        var repo = '/resume';
+
+        // Current path (e.g. /resume/about)
+        var path = window.location.pathname;
+
+        // Remove the repo prefix
+        var redirect = path.replace(repo, '');
+
+        // Preserve query params and hash
+        var search = window.location.search || '';
+        var hash = window.location.hash || '';
+
+        // Construct final redirect target back to index.html
+        var newUrl = repo + '/index.html#' + redirect + search + hash;
+
+        // Redirect
+        window.location.replace(newUrl);
+      })();
     </script>
   </head>
   <body>
-    <p>Redirecting...</p>
+    <p>Redirecting…</p>
   </body>
 </html>
