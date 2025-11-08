@@ -2,10 +2,9 @@
 name: Deploy static content to Pages
 
 on:
-  workflow_run:
-    workflows: ["Node.js CI"]
-    types:
-      - completed
+  push:
+    branches: ["main"]     # Runs on pushes to main
+  workflow_dispatch:        # Allows manual run from the Actions tab
 
 permissions:
   contents: read
