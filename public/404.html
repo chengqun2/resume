@@ -19,7 +19,7 @@
         var hash = window.location.hash || '';
 
         // Construct final redirect target back to index.html
-        var newUrl = repo + '/index.html#' + redirect + search + hash;
+        var newUrl = repo + '#' + redirect + search + hash;
 
         // Redirect
         window.location.replace(newUrl);
